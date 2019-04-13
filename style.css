@@ -44,9 +44,17 @@ header {
 
 .btn__search,
 .btn__add__li {
-  height: 30px;
   width: 30px;
-  background-color: red;
+}
+
+.btn__search {
+  background-color: #C8D3D7;
+  border: 5px solid #c8d3d7;
+}
+
+.btn__add__li {
+  background-color: #1f1f3d;
+  border: 5px solid #1f1f3d;
 }
 
 /************** MAIN  ***************/
@@ -98,8 +106,9 @@ input{
 .nav__li__delete,
 .crd__li__check,
 .crd__btn {
-  width: 30px;
-  background-color: red;
+  margin: 3px;
+  width: 15px;
+  height: 15px;
 }
 
 .bottom--nav--stn{
@@ -139,6 +148,9 @@ input{
 
 .card__area {
   width: 67%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .task__card {
@@ -151,6 +163,7 @@ input{
 
 .crd__title {
   color: #1f1f3d;
+  margin-left: 10px;
 }
 
 .crd--ul {
@@ -163,6 +176,10 @@ input{
 
 .crd__li {
   display: flex;
+}
+
+.nav__li__text {
+  margin-left: 5px;
 }
 
 .bottom--crd--stn{

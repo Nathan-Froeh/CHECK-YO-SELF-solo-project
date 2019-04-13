@@ -30,6 +30,10 @@ function reinstantiate(i){
   storageArray[i].urgent, storageArray[i].id);
 };
 
+function retrieveTask(){
+  console.log(storageArray)
+};
+
 /***************  ADD TASK ITEMS  ******************/
 
 function allowAddItem(){
@@ -51,7 +55,7 @@ function addAnItem(){
 function genListItem(id){
   var taskListItem = `
   <li class='nav__li' data-id='${id}' id='${id}'>
-    <input type='img' src='img' class='nav__li__delete'>
+    <input type='image' src='images/delete.svg' class='nav__li__delete'>
     <p class='nav__li__text'>${taskInput.value}</p>
   </li>`
   toDoListItems.insertAdjacentHTML('beforeend', taskListItem);
@@ -84,12 +88,11 @@ function checkActiveButtons(){
 function initializeTask(){
   event.preventDefault();
   var task = new Task(Date.now(), titleInput.value, taskObjects);
-  console.log(task)
   storageArray.push(task);
   task.saveToStorage(storageArray);
-  //clearFields();
+  clearFields();
   genToDoList(task);
-  genToDoListItems(task)
+  genToDoListItems(task);
 };
 
 function genToDoList(task){
@@ -102,11 +105,11 @@ function genToDoList(task){
       </ul>
       <section class='crd--stn bottom--crd--stn'>
         <div class='crd--urgent--div'>
-          <input type='img' id='crd__btn__urgent' class='crd__btn'>
+          <input type='image' src='images/urgent.svg' id='crd__btn__urgent' class='crd__btn'>
           <p class='crd__text crd__urgent__text'>URGENT</p>
         </div>
         <div class='crd--delete--div'>
-          <input type='img' id='crd__btn__delete' class='crd__btn'>
+          <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn'>
           <p class='crd__text crd__delete__text'>DELETE</p>
         </div>
       </section>
@@ -118,13 +121,13 @@ function genToDoListItems(task){
   var cardListItems = document.querySelector(`#crd--ul${task.id}`)
   task.item.forEach(function(item, index){
     var taskListItem = `
-    <li class='nav__li' data-id='${item.id}' id='${item.id}'>
-      <input type='img' src='img' class='nav__li__delete'>
+    <li class='crd__li' data-id='${item.id}' id='${item.id}'>
+      <input type='image' src='images/checkbox.svg' class='crd__li__check'>
       <p class='nav__li__text'>${item.text}</p>
     </li>`
     cardListItems.insertAdjacentHTML('beforeend', taskListItem);
-  })
-}
+  });
+};
 
 /***************  CLEAR INPUTS  ******************/
 
