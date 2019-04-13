@@ -1,5 +1,5 @@
 /************  GLOBAL VARIABLES  ***********/
-var storageArray;
+var storageArray = JSON.parse(localStorage.getItem('task')) || [];
 var taskObjects = [];
 var searchButton = document.querySelector('#btn__search');
 var searchInput = document.querySelector('#input__search');
@@ -20,8 +20,8 @@ titleInput.addEventListener('keyup', allowAddItem);
 taskInput.addEventListener('keyup', allowAddItem);
 addItem.addEventListener('click', addAnItem);
 clearButton.addEventListener('click', clearFields);
-
 navList.addEventListener('click', checkDeleteButton)
+makeTaskButton.addEventListener('click', initializeTask)
 
 /************  UNIVERSAL FUNCTIONS  ***********/
 
@@ -67,7 +67,6 @@ function addItemToObject(id){
 
 function addObjectToArray(object){
   taskObjects.push(object);
-  console.log(taskObjects)
 };
 
 function checkActiveButtons(){
@@ -82,12 +81,50 @@ function checkActiveButtons(){
 
 /***************  MAKE TODO LIST  ******************/
 
-function createTask(e){
+function initializeTask(){
   event.preventDefault();
-  var task = new task(Date.now(), titleInput.value, taskInput.value);
+  var task = new Task(Date.now(), titleInput.value, taskObjects);
+  console.log(task)
   storageArray.push(task);
   task.saveToStorage(storageArray);
+  //clearFields();
+  genToDoList(task);
+  genToDoListItems(task)
 };
+
+function genToDoList(task){
+  var toDoCard = `
+  <article class='task__card' data-id='crd--ul${task.id}'>
+    <section class='crd--stn top--crd--stn'>
+      <h3 class='crd__title'>${task.title}</h3>
+    </section>
+      <ul class='crd--ul' id='crd--ul${task.id}'>
+      </ul>
+      <section class='crd--stn bottom--crd--stn'>
+        <div class='crd--urgent--div'>
+          <input type='img' id='crd__btn__urgent' class='crd__btn'>
+          <p class='crd__text crd__urgent__text'>URGENT</p>
+        </div>
+        <div class='crd--delete--div'>
+          <input type='img' id='crd__btn__delete' class='crd__btn'>
+          <p class='crd__text crd__delete__text'>DELETE</p>
+        </div>
+      </section>
+    </article>`
+    toDoListBox.insertAdjacentHTML('afterbegin', toDoCard)
+};
+
+function genToDoListItems(task){
+  var cardListItems = document.querySelector(`#crd--ul${task.id}`)
+  task.item.forEach(function(item, index){
+    var taskListItem = `
+    <li class='nav__li' data-id='${item.id}' id='${item.id}'>
+      <input type='img' src='img' class='nav__li__delete'>
+      <p class='nav__li__text'>${item.text}</p>
+    </li>`
+    cardListItems.insertAdjacentHTML('beforeend', taskListItem);
+  })
+}
 
 /***************  CLEAR INPUTS  ******************/
 

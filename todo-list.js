@@ -5,8 +5,8 @@ class Task {
     this.item = item;
     this.urgent = urgent || false;
   };
-  saveToStorage(){
-
+  saveToStorage(storageArray){
+    localStorage.setItem('task', JSON.stringify(storageArray))
   };
 
   deleteFromStorage(){
