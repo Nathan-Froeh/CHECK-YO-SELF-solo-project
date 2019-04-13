@@ -11,15 +11,17 @@ var clearButton = document.querySelector('#btn__clear');
 var urgentFilter = document.querySelector('#btn__urgency__filter');
 var toDoListItems = document.querySelector('#nav--list--items');
 var toDoListBox = document.querySelector('.card__area');
-var navList = document.querySelector('.nav__li')
+var navList = document.querySelector('#nav--list--items')
 
 
 /************  EVENT LISTENERS  ***********/
 
 titleInput.addEventListener('keyup', allowAddItem);
 taskInput.addEventListener('keyup', allowAddItem);
-addItem.addEventListener('click', addAnItem)
-clearButton.addEventListener('click', clearFields)
+addItem.addEventListener('click', addAnItem);
+clearButton.addEventListener('click', clearFields);
+
+navList.addEventListener('click', checkDeleteButton)
 
 /************  UNIVERSAL FUNCTIONS  ***********/
 
@@ -94,7 +96,7 @@ function clearFields(){
   titleInput.value = '';
   taskInput.value = '';
   clearListItems();
-  //clearArray();
+  clearArray();
 };
 
 function clearListItems(){
@@ -109,6 +111,16 @@ function clearArray(){
 }
 
 /***************  DELETE LIST ITEM  ******************/
+
+function checkDeleteButton(event){
+  if(event.target.className === 'nav__li__delete'){
+    removeListItem(event)
+  };
+};
+
+function removeListItem(event){
+  event.target.parentNode.remove();
+}
 
 /***************  CHECK ITEM COMPLETE  ******************/
 
