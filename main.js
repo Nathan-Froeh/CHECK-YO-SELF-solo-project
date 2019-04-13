@@ -11,7 +11,7 @@ var clearButton = document.querySelector('#btn__clear');
 var urgentFilter = document.querySelector('#btn__urgency__filter');
 var toDoListItems = document.querySelector('#nav--list--items');
 var toDoListBox = document.querySelector('.card__area');
-
+var navList = document.querySelector('.nav__li')
 
 
 /************  EVENT LISTENERS  ***********/
@@ -48,8 +48,8 @@ function addAnItem(){
 
 function genListItem(id){
   var taskListItem = `
-  <li class='nav__li'>
-    <input type='img' src='img' data-id='${id}' class='nav__li__delete'>
+  <li class='nav__li' data-id='${id}' id='${id}'>
+    <input type='img' src='img' class='nav__li__delete'>
     <p class='nav__li__text'>${taskInput.value}</p>
   </li>`
   toDoListItems.insertAdjacentHTML('beforeend', taskListItem);
@@ -91,16 +91,16 @@ function createTask(e){
 
 function clearFields(){
   event.preventDefault();
-  //titleInput.innerText = '';
-  //taskInput.innerText = '';
+  titleInput.value = '';
+  taskInput.value = '';
   clearListItems();
   //clearArray();
 };
 
 function clearListItems(){
- taskObjects.forEach(function(item, index){
-  console.log(item.id + ' ! ' + index)
-  
+  taskObjects.forEach(function(item, index){
+    var element = document.getElementById(item.id);
+    element.parentNode.removeChild(element);
  });
 };
 
