@@ -73,7 +73,7 @@ header {
 .input__task__title,
 .input__text__item {
   border-radius: 2px;
-  border: 0;
+  border: 2px solid #1F1D3D;
 }
 
 .btn__search,
@@ -99,7 +99,7 @@ label{
 
 nav{
   background-color: #597A8B;
-  width: 33%;
+  width: 277px;
   display: flex;
   flex-direction: column;
 }
@@ -132,11 +132,16 @@ input{
 }
 
 .nav__li__delete,
-.crd__li__check,
-.crd__btn {
+.crd__li__check {
   margin: 3px;
   width: 15px;
   height: 15px;
+}
+
+.crd__btn {
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
 }
 
 .bottom--nav--stn{
@@ -194,6 +199,7 @@ input{
 .crd__title {
   color: #1f1f3d;
   margin-left: 10px;
+  font-size: 20px;
 }
 
 .crd--ul {
@@ -224,6 +230,7 @@ input{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3px;
 }
 
 .crd__text{
