@@ -34,9 +34,8 @@ function reinstantiate(i) {
 
 function retrieveTask() {
   storageArray.forEach(function(task) {
-    genToDoList(task);
-    genToDoListItems(task);
-  })
+    checkUrgent(task)
+  });
 };
 
 function taskSelector(event) {
@@ -107,13 +106,19 @@ function initializeTask() {
   var task = new Task(Date.now(), titleInput.value, taskObjects);
   storageArray.push(task);
   task.saveToStorage(storageArray);
+  checkUrgent(task);
   clearFields();
-  genToDoList(task);
-  genToDoListItems(task);
   checkActiveButtons();
 };
 
-function genToDoList(task) {
+function checkUrgent(task) {
+  var urgent;
+  task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg'
+  genToDoList(task, urgent)
+  genToDoListItems(task)
+};
+
+function genToDoList(task, urgent) {
   var toDoCard = `
   <article class='task__card' data-id='crd--ul${task.id}' id='${task.id}'>
     <section class='crd--stn top--crd--stn'>
@@ -123,7 +128,7 @@ function genToDoList(task) {
       </ul>
       <section class='crd--stn bottom--crd--stn'>
         <div class='crd--urgent--div'>
-          <input type='image' src='images/urgent.svg' id='crd__btn__urgent' class='crd__btn crd__urgent'>
+          <input type='image' src=${urgent} id='crd__btn__urgent' class='crd__btn crd__urgent'>
           <p class='crd__text crd__urgent__text'>URGENT</p>
         </div>
         <div class='crd--delete--div'>
