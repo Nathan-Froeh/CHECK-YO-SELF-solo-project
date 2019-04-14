@@ -7,6 +7,7 @@
 }
 body{
   height: 100vh;
+  font-weight: 400;
 }
 
 ul {
@@ -28,14 +29,20 @@ header {
   height: 35px;
   width: 300px;
   color: #E5E5E8;
+  margin-bottom: 10px;
+  font-weight: 800;
 }
 
 .yellow__text{
   color: #fec40e
 }
 
+.search__field:placeholder-shown{
+  padding-left: 10px;
+}
+
 .search--bar {
-  height: 35px;
+  height: 40px;
   display: flex;
 }
 
@@ -45,18 +52,35 @@ header {
 
 .btn__search,
 .btn__add__li {
-  width: 30px;
+  width: 40px;
 }
 
 .btn__search {
   background-color: #C8D3D7;
-  border: 5px solid #c8d3d7;
+  border: 10px solid #c8d3d7;
 }
 
 .btn__add__li {
   background-color: #1f1f3d;
-  border: 5px solid #1f1f3d;
+  border: 10px solid #1f1f3d;
 }
+
+.search__field,
+.btn__add__li {
+  border-radius: 0 2px 2px 0;
+}
+
+.input__task__title,
+.input__text__item {
+  border-radius: 2px;
+  border: 0;
+}
+
+.btn__search,
+.input__text__item {
+  border-radius: 2px 0 0 2px;
+}
+
 
 /************** MAIN  ***************/
 
@@ -67,6 +91,8 @@ main{
 
 label{
   width: 100%;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 /*************  NAV  ***************/
@@ -79,7 +105,7 @@ nav{
 }
 
 input{
-  height: 30px;
+  height: 40px;
 }
 
 .top--nav--stn{
@@ -114,14 +140,12 @@ input{
 }
 
 .bottom--nav--stn{
-  border-bottom: 2px solid #2D6A84;
+  border-bottom: 2px solid #3d6678;
+  margin-bottom: 10px;
 }
 
 .nav__text {
   color: #B1C1C9
-}
-.btn{
-  color:#ffffff
 }
 
 .item--input{
@@ -133,15 +157,17 @@ input{
 
 .input__text__item,
 .search__field {
-  width: 225px;
+  width: 215px;
 }
 
 .btn{
+  color:#ffffff;
   background-color: #1f1f3d;
-  height: 35px;
+  height: 40px;
   margin-bottom: 20px;
-  border-radius: 4px;
+  border-radius: 2px;
   border: none;
+  font-size: 15px;
 }
 
 .btn__urgency__filter {
