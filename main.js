@@ -41,6 +41,7 @@ function retrieveTask() {
 function taskSelector(event) {
   if (event.target.className === 'crd__li__check') {
     toggleCheckMark(event);
+    toggleCheckText(event);
   } else if (event.target.className === 'crd__btn crd__urgent') {
     toggleUrgent(event);
   } else if (event.target.className === 'crd__btn crd__delete') {
@@ -115,7 +116,7 @@ function checkUrgent(task) {
   var urgent;
   task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg'
   genToDoList(task, urgent)
-  genToDoListItems(task)
+  checkCheckMark(task)
 };
 
 function genToDoList(task, urgent) {
@@ -140,16 +141,32 @@ function genToDoList(task, urgent) {
     toDoListBox.insertAdjacentHTML('afterbegin', toDoCard)
 };
 
-function genToDoListItems(task) {
+function checkCheckMark(task){
+  task.item.forEach(function(item, index){
+    console.log(task.item[index].checked)
+    // console.log(index)
+  if (task.item[index].checked === true) {
+    var src = 'images/checkbox-active.svg'
+    var myClass = 'crd__li__checked'
+  } else {
+    src = 'images/checkbox.svg'
+    myClass = 'crd__li__uncheck'
+  }
+
+      genToDoListItems(task, item, src, myClass)
+    })
+};
+
+function genToDoListItems(task, item, src, myClass) {
   var cardListItems = document.querySelector(`#crd--ul${task.id}`)
-  task.item.forEach(function(item, index) {
+  // task.item.forEach(function(item, index) {
     var taskListItem = `
     <li class='crd__li' data-id='${item.id}' id='${item.id}'>
-      <input type='image' src='images/checkbox.svg' class='crd__li__check'>
-      <p class='nav__li__text'>${item.text}</p>
+      <input type='image' src=${src} class='crd__li__check'>
+      <p class=${myClass} 'crd__li__uncheck'>${item.text}</p>
     </li>`
     cardListItems.insertAdjacentHTML('beforeend', taskListItem);
-  });
+  // });
 };
 
 /***************  CLEAR INPUTS  ******************/
@@ -188,30 +205,48 @@ function removeListItem(event) {
 
 /***************  CHECK ITEM COMPLETE  ******************/
 
+function toggleCheckText(event){
+  if (event.target.src.match('images/checkbox-active.svg')) {
+    console.log('checked')
+    event.target.parentNode.childNodes[3].classList.add('crd__li__checked')
+   } else {
+    event.target.parentNode.childNodes[3].classList.remove('crd__li__checked')
+    console.log('unchecked')
+   };
+  //  cardCheck(event, checked);
+}
+
 function toggleCheckMark(event) {
   if (event.target.src.match('images/checkbox.svg')) {
    event.target.src = 'images/checkbox-active.svg'
+   var checked = true;
   } else {
     event.target.src = 'images/checkbox.svg'
+    checked = false;
   };
-  cardCheck(event);
+  cardCheck(event, checked);
+  console.log(event.target.parentNode.childNodes[3].classList)
+  // toggleCheckText(event);
 };
 
-function cardCheck(event) {
-  console.log(storageArray)
-  storageArray.forEach(function(task, index){
+function cardCheck(event, checked) {
+  // console.log(storageArray)
+  storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
     if(parseInt(event.target.parentNode.id) === task.item[index].id) {
       console.log('it works')
-      //myTask.updateTask(storageArray)
-
     }
-    console.log(task.item)
-    console.log(index)
-    // console.log(event.target.parentNode.id)
-    console.log(event.target.parentNode)
+    taskCheck(event, task, myTask, checked)
   });
 };
+
+function taskCheck(event, task, myTask, checked) {
+  task.item.forEach(function(item, index) {
+    if (item.id === event.target.parentNode.dataset.id) {
+      myTask.updateTask(storageArray, item, checked)
+    }
+  })
+}
 
 /***************  MAKE LIST URGENT  ******************/
 
@@ -231,7 +266,7 @@ function cardUrgent(event, urgent) {
   storageArray.forEach(function(task, index){
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
-      myTask.updateTask(storageArray, urgent, index)
+      myTask.updateToDo(storageArray, urgent, index)
     };
   });
 };

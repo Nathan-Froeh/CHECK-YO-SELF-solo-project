@@ -214,8 +214,9 @@ input{
   display: flex;
 }
 
-.nav__li__text {
+.crd__li__uncheck {
   margin-left: 5px;
+  color: #1f1f3d;
 }
 
 .bottom--crd--stn{
@@ -235,5 +236,10 @@ input{
 
 .crd__text{
   font-size: 10px;
+  color: #3c6577;
+}
+
+.crd__li__checked {
+  margin-left: 5px;
   color: #3c6577;
 }
