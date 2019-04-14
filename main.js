@@ -133,7 +133,7 @@ function genToDoList(task, urgent) {
           <p class='crd__text crd__urgent__text'>URGENT</p>
         </div>
         <div class='crd--delete--div'>
-          <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn crd__delete'>
+          <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn crd__delete' disabled>
           <p class='crd__text crd__delete__text'>DELETE</p>
         </div>
       </section>
@@ -141,32 +141,26 @@ function genToDoList(task, urgent) {
     toDoListBox.insertAdjacentHTML('afterbegin', toDoCard)
 };
 
-function checkCheckMark(task){
-  task.item.forEach(function(item, index){
-    console.log(task.item[index].checked)
-    // console.log(index)
+function checkCheckMark(task) {
+  task.item.forEach(function(item, index) {
   if (task.item[index].checked === true) {
-    var src = 'images/checkbox-active.svg'
-    var myClass = 'crd__li__checked'
+    var src = 'images/checkbox-active.svg';
+    var myClass = 'crd__li__checked';
   } else {
-    src = 'images/checkbox.svg'
-    myClass = 'crd__li__uncheck'
-  }
-
-      genToDoListItems(task, item, src, myClass)
-    })
+    src = 'images/checkbox.svg';
+    myClass = 'crd__li__uncheck';
+  } genToDoListItems(task, item, src, myClass);
+  });
 };
 
 function genToDoListItems(task, item, src, myClass) {
   var cardListItems = document.querySelector(`#crd--ul${task.id}`)
-  // task.item.forEach(function(item, index) {
     var taskListItem = `
     <li class='crd__li' data-id='${item.id}' id='${item.id}'>
       <input type='image' src=${src} class='crd__li__check'>
-      <p class=${myClass} 'crd__li__uncheck'>${item.text}</p>
+      <p class='${myClass} crd__li__uncheck'>${item.text}</p>
     </li>`
     cardListItems.insertAdjacentHTML('beforeend', taskListItem);
-  // });
 };
 
 /***************  CLEAR INPUTS  ******************/
@@ -213,7 +207,6 @@ function toggleCheckText(event){
     event.target.parentNode.childNodes[3].classList.remove('crd__li__checked')
     console.log('unchecked')
    };
-  //  cardCheck(event, checked);
 }
 
 function toggleCheckMark(event) {
@@ -226,7 +219,6 @@ function toggleCheckMark(event) {
   };
   cardCheck(event, checked);
   console.log(event.target.parentNode.childNodes[3].classList)
-  // toggleCheckText(event);
 };
 
 function cardCheck(event, checked) {
@@ -237,6 +229,7 @@ function cardCheck(event, checked) {
       console.log('it works')
     }
     taskCheck(event, task, myTask, checked)
+    searchDeleteCard(event, task)
   });
 };
 
@@ -247,6 +240,7 @@ function taskCheck(event, task, myTask, checked) {
     }
   })
 }
+
 
 /***************  MAKE LIST URGENT  ******************/
 
@@ -272,10 +266,30 @@ function cardUrgent(event, urgent) {
 };
 
 /***************  REMOVE TODO LIST  ******************/
+// task = each card
+// item = each list item
+// index = index of list item
+
+function searchDeleteCard(event, task) {
+  var finished = 0;
+  var active = false;
+  task.item.forEach(function(item, index) {
+    if (item.checked === true) {
+      finished++
+    } if (task.item.length === finished) {
+      searchItemDelete(event, active)
+    }
+  })
+}
+
+function searchItemDelete() {
+  console.log('AWW SHIT!')
+}
 
 function cardDelete(event) {
+  console.log('delete')
   storageArray.forEach(function(task, index){
-    if (event.target.parentNode.id === task.id) {
+    if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
       console.log('delete')
     }
   });
