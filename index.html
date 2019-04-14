@@ -1,32 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="media-queries.css">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='media-queries.css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
     <title>CHECK YO' SELF</title>
   </head>
   <body>
     <header>
-      <h1 id='logo'>CHECK<span id='yellow__text'> YO' </span>SELF</h1>
-      <form id='search--bar'>
-        <input type='img' src='' id='btn btn__search'>
-        <input type='search' id='input input__search'>
+      <h1 class='header__text logo'>CHECK<span class='yellow__text'> YO' </span>SELF</h1>
+      <form class='search--bar'>
+        <input type='image' src='images/search.svg' id='btn__search' class='search btn__search'>
+        <input type='search' id='input__search' class='search search__field' placeholder="Search">
       </form>
     </header>
-    <nav>
-      <form id='nav__form'>
-        <section id='nav--stn top--nav--stn'>
-          <h2 id='title'>Task Title</h2>
-          <input type="text" id='input input__title'>
-        </section>
-        <ul class='ul nav--ul'>
-
-        </ul>
-        <section class='nav--stn low--nav--stn'></section>
-      </form>
-    </nav>
+    <main>
+      <nav>
+        <form class='nav__form'>
+          <section class='nav--stn top--nav--stn'>
+            <label class='nav__text title' for='input__title'>Task Title</label>
+            <input type='text' id='input__title' class='input__task__title'>
+          </section>
+          <ul class='ul nav--ul' id='nav--list--items'>
+            <!-- <li class='nav__li'>
+              <input type='img' src='img' data-id='' class='nav__li__delete'>
+              <p class='nav__li__text'>Display text here and stuff </p>
+            </li> -->
+          </ul>
+          <section class='nav--stn bottom--nav--stn'>
+            <div class='item--input'>
+              <label class='nav__text item' for='input__item'>Task Item</label>
+              <input type='text' id='input__item' class='input__text__item'>
+              <input type='image' src='images/plus.svg' id='btn__add__li' class='btn__add__li' disabled>
+            </div>
+            <input type='submit' id='btn__make__list' class='btn' value='Make Task List' disabled>
+            <input type='submit' id='btn__clear' class='btn' value='Clear All' disabled>
+          </section>
+        </form>
+        <input type='button' id='btn__urgency__filter' class='btn btn__urgency__filter' value='Filter By Urgency'>
+      </nav>
+      <section class='card__area'>
+        <!-- <article class='task__card' data-id=''>
+          <section class='crd--stn top--crd--stn'>
+            <h3 class='crd__title'>Task Title</h3>
+          </section>
+          <ul class='crd--ul'>
+            <li class='crd__li'>
+              <input type='image' src='images/checkbox.svg' class='crd__li__check'>
+              <p class='crd__li__text'>Display text here and stuff </p>
+            </li>
+          </ul>
+          <section class='crd--stn bottom--crd--stn'>
+            <div class='crd--urgent--div'>
+              <input type='image' src='images/urgent.svg' id='crd__btn__urgent' class='crd__btn'>
+              <p class='crd__text crd__urgent__text'>URGENT</p>
+            </div>
+            <div class='crd--delete--div'>
+              <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn'>
+              <p class='crd__text crd__delete__text'>DELETE</p>
+            </div>
+          </section>
+        </article> -->
+      </section>
+    </main>
+    <script type='text/javascript' src='todo-list.js'></script>
+    <script type='text/javascript' src='main.js'></script>
   </body>
 </html>
