@@ -25,8 +25,9 @@ header {
 }
 
 .logo {
-  height: 45px;
+  height: 35px;
   width: 300px;
+  color: #E5E5E8;
 }
 
 .yellow__text{
@@ -34,7 +35,7 @@ header {
 }
 
 .search--bar {
-  height: 45px;
+  height: 35px;
   display: flex;
 }
 
@@ -82,7 +83,7 @@ input{
 }
 
 .top--nav--stn{
-  height: 100px;
+  height: 60px;
 }
 
 .nav--stn{
@@ -101,6 +102,7 @@ input{
 .nav__li {
   display: flex;
   padding-left: 25px;
+  padding-top: 10px;
 }
 
 .nav__li__delete,
@@ -115,7 +117,9 @@ input{
   border-bottom: 2px solid #2D6A84;
 }
 
-.nav__text,
+.nav__text {
+  color: #B1C1C9
+}
 .btn{
   color:#ffffff
 }
