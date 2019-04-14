@@ -226,7 +226,7 @@ function cardUrgent(event, urgent) {
   storageArray.forEach(function(task, index){
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
-      myTask.updateTask(storageArray, urgent)
+      myTask.updateTask(storageArray, urgent, index)
     };
   });
 };

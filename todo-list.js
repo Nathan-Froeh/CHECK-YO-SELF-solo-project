@@ -18,8 +18,9 @@ class Task {
 
   };
 
-  updateTask(storageArray, urgent){
+  updateTask(storageArray, urgent, index){
     this.urgent = urgent;
+    storageArray.splice(index, 1, this) //this updated the array 
     this.saveToStorage(storageArray)
     console.log(storageArray)
   };
