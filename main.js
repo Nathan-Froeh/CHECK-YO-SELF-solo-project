@@ -218,18 +218,11 @@ function toggleCheckMark(event) {
     checked = false;
   };
   cardCheck(event, checked);
-  // console.log(event.target.parentNode.childNodes[3].classList)
 };
 
 function cardCheck(event, checked) {
-  // console.log(storageArray)
   storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
-    // console.log(event.target.parentNode.parentNode)
-    // console.log(task)
-    if(parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
-      searchDeleteCard(event, task)
-    }
     taskCheck(event, task, myTask, checked)
   });
 };
@@ -238,6 +231,7 @@ function taskCheck(event, task, myTask, checked) {
   task.item.forEach(function(item, index) {
     if (item.id === event.target.parentNode.dataset.id) {
       myTask.updateTask(storageArray, item, checked)
+      searchForDeleteCard(event)
     }
   })
 }
@@ -257,7 +251,6 @@ function toggleUrgent(event){
 };
 
 function cardUrgent(event, urgent) {
-  console.log(urgent)
   storageArray.forEach(function(task, index){
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
@@ -271,36 +264,32 @@ function cardUrgent(event, urgent) {
 // item = each list item
 // index = index of list item
 
-function searchDeleteCard(event, task) {
+function searchForDeleteCard(event){
+  storageArray.forEach(function(task, index) {
+    var myTask = reinstantiate(index)
+    if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
+      searchForItemDelete(event, task)
+    }
+})
+}
+
+function searchForItemDelete(event, task) {
   var finished = 0;
   task.item.forEach(function(item, index) {
     if (item.checked === true) {
       finished++
-      console.log(task.item)
-      //console.log(finished)
-      //console.log(task.item.length)
-      console.log(item.checked)
-    } if (task.item.length === finished) {
-      searchItemDelete(event, active = true)
-    } else {searchItemDelete(event, active = false)}
-    // console.log(finished)
-    // console.log(active)
-    // console.log(task.item.length)
-    console.log(item.checked)
+    } 
+    if (task.item.length === finished) {
+      updateDelete(event, active = true)
+    } else {updateDelete(event, active = false)}
   })
 }
 
-function searchItemDelete(event, active) {
-  // console.log(event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1])
-  //console.log(event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3])
-  // console.log(active)
-  // console.log(active)
+function updateDelete(event, active) {
   if (active === true) {
-    // console.log('true')
     event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
   } else {
     event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
-    // console.log('false')
   }
 }
 
