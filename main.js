@@ -125,7 +125,7 @@ function genToDoList(task, urgent) {
     <section class='crd--stn top--crd--stn'>
       <h3 class='crd__title'>${task.title}</h3>
     </section>
-      <ul class='crd--ul' id='crd--ul${task.id}'>
+      <ul class='crd--ul' id='crd--ul${task.id}' data-id='${task.id}'>
       </ul>
       <section class='crd--stn bottom--crd--stn'>
         <div class='crd--urgent--div'>
@@ -218,18 +218,19 @@ function toggleCheckMark(event) {
     checked = false;
   };
   cardCheck(event, checked);
-  console.log(event.target.parentNode.childNodes[3].classList)
+  // console.log(event.target.parentNode.childNodes[3].classList)
 };
 
 function cardCheck(event, checked) {
   // console.log(storageArray)
   storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
-    if(parseInt(event.target.parentNode.id) === task.item[index].id) {
-      console.log('it works')
+    // console.log(event.target.parentNode.parentNode)
+    // console.log(task)
+    if(parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
+      searchDeleteCard(event, task)
     }
     taskCheck(event, task, myTask, checked)
-    searchDeleteCard(event, task)
   });
 };
 
@@ -272,18 +273,35 @@ function cardUrgent(event, urgent) {
 
 function searchDeleteCard(event, task) {
   var finished = 0;
-  var active = false;
   task.item.forEach(function(item, index) {
     if (item.checked === true) {
       finished++
+      console.log(task.item)
+      //console.log(finished)
+      //console.log(task.item.length)
+      console.log(item.checked)
     } if (task.item.length === finished) {
-      searchItemDelete(event, active)
-    }
+      searchItemDelete(event, active = true)
+    } else {searchItemDelete(event, active = false)}
+    // console.log(finished)
+    // console.log(active)
+    // console.log(task.item.length)
+    console.log(item.checked)
   })
 }
 
-function searchItemDelete() {
-  console.log('AWW SHIT!')
+function searchItemDelete(event, active) {
+  // console.log(event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1])
+  //console.log(event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3])
+  // console.log(active)
+  // console.log(active)
+  if (active === true) {
+    // console.log('true')
+    event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
+  } else {
+    event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
+    // console.log('false')
+  }
 }
 
 function cardDelete(event) {
