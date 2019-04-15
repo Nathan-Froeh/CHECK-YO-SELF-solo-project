@@ -1,3 +1,9 @@
+// INSTRUCTOR QUESTIONS
+// 1 DOES STORAGEARRAY AND TASKOBJECTS COUNT AS 2 ARRAYS
+// 2 DOES MY GENCARD FUNCTION COUNT AS OVER 10 LINES
+// 3
+
+
 /************  GLOBAL VARIABLES  ***********/
 var storageArray = JSON.parse(localStorage.getItem('task')) || [];
 var taskObjects = [];
@@ -29,19 +35,19 @@ toDoListBox.addEventListener('click', taskSelector)
 
 function reinstantiate(i) {
   return new Task(storageArray[i].id, storageArray[i].title,
-    storageArray[i].item, storageArray[i].urgent, storageArray[i].task);
+    storageArray[i].item, storageArray[i].urgent, storageArray[i].xButton);
 };
 
 function retrieveTask() {
   storageArray.forEach(function(task) {
-    genToDoList(task);
-    genToDoListItems(task);
-  })
+    checkUrgent(task)
+  });
 };
 
 function taskSelector(event) {
   if (event.target.className === 'crd__li__check') {
     toggleCheckMark(event);
+    toggleCheckText(event);
   } else if (event.target.className === 'crd__btn crd__urgent') {
     toggleUrgent(event);
   } else if (event.target.className === 'crd__btn crd__delete') {
@@ -107,44 +113,68 @@ function initializeTask() {
   var task = new Task(Date.now(), titleInput.value, taskObjects);
   storageArray.push(task);
   task.saveToStorage(storageArray);
+  checkUrgent(task);
   clearFields();
-  genToDoList(task);
-  genToDoListItems(task);
   checkActiveButtons();
 };
 
-function genToDoList(task) {
+function checkUrgent(task) {
+  var urgent;
+  task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg'
+  task.urgent ? urgentCSS = '__urgent' : urgentCSS = ''
+  checkXButton(task, urgent, urgentCSS)
+  checkCheckMark(task)
+};
+
+function checkXButton(task, urgent, urgentCSS){
+  task.xButton ? x = 'images/delete-active.svg' : x = 'images/delete.svg'
+  task.xButton ? xText = 'crd__delete__text' : xText = 'crd__text'
+  task.xButton ? xDisable = '' : xDisable = 'disabled'
+  genToDoList(task, urgent, x, xText, urgentCSS, xDisable)
+}
+
+function genToDoList(task, urgent, x, xText, urgentCSS, xDisable) {
   var toDoCard = `
-  <article class='task__card' data-id='crd--ul${task.id}' id='${task.id}'>
+  <article class='task__card${urgentCSS}' data-id='crd--ul${task.id}' id='${task.id}'>
     <section class='crd--stn top--crd--stn'>
       <h3 class='crd__title'>${task.title}</h3>
     </section>
-      <ul class='crd--ul' id='crd--ul${task.id}'>
+      <ul class='crd--ul${urgentCSS}' id='crd--ul${task.id}' data-id='${task.id}'>
       </ul>
       <section class='crd--stn bottom--crd--stn'>
         <div class='crd--urgent--div'>
-          <input type='image' src='images/urgent.svg' id='crd__btn__urgent' class='crd__btn crd__urgent'>
-          <p class='crd__text crd__urgent__text'>URGENT</p>
+          <input type='image' src=${urgent} id='crd__btn__urgent' class='crd__btn crd__urgent'>
+          <p class='crd__text${urgentCSS}'>URGENT</p>
         </div>
         <div class='crd--delete--div'>
-          <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn crd__delete'>
-          <p class='crd__text crd__delete__text'>DELETE</p>
+          <input type='image' src=${x} id='crd__btn__delete' class='crd__btn crd__delete' ${xDisable}>
+          <p class=${xText}>DELETE</p>
         </div>
       </section>
     </article>`
     toDoListBox.insertAdjacentHTML('afterbegin', toDoCard)
 };
 
-function genToDoListItems(task) {
-  var cardListItems = document.querySelector(`#crd--ul${task.id}`)
+function checkCheckMark(task) {
   task.item.forEach(function(item, index) {
+  if (task.item[index].checked === true) {
+    var src = 'images/checkbox-active.svg';
+    var myClass = 'crd__li__checked';
+  } else {
+    src = 'images/checkbox.svg';
+    myClass = 'crd__li__uncheck';
+  } genToDoListItems(task, item, src, myClass);
+  });
+};
+
+function genToDoListItems(task, item, src, myClass) {
+  var cardListItems = document.querySelector(`#crd--ul${task.id}`)
     var taskListItem = `
     <li class='crd__li' data-id='${item.id}' id='${item.id}'>
-      <input type='image' src='images/checkbox.svg' class='crd__li__check'>
-      <p class='nav__li__text'>${item.text}</p>
+      <input type='image' src=${src} class='crd__li__check'>
+      <p class='${myClass} crd__li__uncheck'>${item.text}</p>
     </li>`
     cardListItems.insertAdjacentHTML('beforeend', taskListItem);
-  });
 };
 
 /***************  CLEAR INPUTS  ******************/
@@ -183,60 +213,139 @@ function removeListItem(event) {
 
 /***************  CHECK ITEM COMPLETE  ******************/
 
+function toggleCheckText(event){
+  if (event.target.src.match('images/checkbox-active.svg')) {
+    console.log('checked')
+    event.target.parentNode.childNodes[3].classList.add('crd__li__checked')
+   } else {
+    event.target.parentNode.childNodes[3].classList.remove('crd__li__checked')
+    console.log('unchecked')
+   };
+}
+
 function toggleCheckMark(event) {
   if (event.target.src.match('images/checkbox.svg')) {
    event.target.src = 'images/checkbox-active.svg'
+   var checked = true;
   } else {
     event.target.src = 'images/checkbox.svg'
+    checked = false;
   };
-  cardCheck(event);
+  cardCheck(event, checked);
 };
 
-function cardCheck(event) {
-  console.log(storageArray)
-  storageArray.forEach(function(task, index){
+function cardCheck(event, checked) {
+  storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
-    if(parseInt(event.target.parentNode.id) === task.item[index].id) {
-      console.log('it works')
-      //myTask.updateTask(storageArray)
-
-    }
-    console.log(task.item)
-    console.log(index)
-    // console.log(event.target.parentNode.id)
-    console.log(event.target.parentNode)
+    taskCheck(event, task, myTask, checked)
   });
 };
+
+function taskCheck(event, task, myTask, checked) {
+  task.item.forEach(function(item, index) {
+    if (item.id === event.target.parentNode.dataset.id) {
+      myTask.updateTask(storageArray, item, checked)
+      searchForDeleteCard(event)
+    }
+  })
+}
 
 /***************  MAKE LIST URGENT  ******************/
 
 function toggleUrgent(event){
+  console.log(event.target.parentNode.parentNode.parentNode.childNodes[3])
   if (event.target.src.match('images/urgent.svg')) {
-    event.target.src = 'images/urgent-active.svg'
-    var urgent = true;
+    urgentTrue(event)
   } else {
-    event.target.src = 'images/urgent.svg'
-    urgent = false;
-  }
-  cardUrgent(event, urgent)
+    urgentFalse(event)
+  };
 };
 
+// Main Section   event.target.parentNode.parentNode.parentNode
+// UL section   event.target.parentNode.parentNode.parentNode.childNodes[3]
+// Urgent text  event.target.parentNode.childNodes[3]
+
+function urgentTrue(event){
+  event.target.src = 'images/urgent-active.svg'
+  event.target.parentNode.parentNode.parentNode.classList = 'task__card__urgent';
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul__urgent'
+  event.target.parentNode.childNodes[3].classList = 'crd__text__urgent'
+  var urgent = true;
+  cardUrgent(event, urgent)
+}
+
+function urgentFalse(event){
+  event.target.src = 'images/urgent.svg'
+  event.target.parentNode.parentNode.parentNode.classList = 'task__card';
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul'
+  event.target.parentNode.childNodes[3].classList = 'crd__text'
+  var urgent = false;
+  cardUrgent(event, urgent)
+}
+
 function cardUrgent(event, urgent) {
-  console.log(urgent)
   storageArray.forEach(function(task, index){
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
-      myTask.updateTask(storageArray, urgent, index)
+      myTask.updateToDo(storageArray, urgent, index)
     };
   });
 };
 
 /***************  REMOVE TODO LIST  ******************/
 
+function searchForDeleteCard(event){
+  storageArray.forEach(function(task, index) {
+    var myTask = reinstantiate(index)
+    if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
+      searchForItemDelete(event, task, myTask, index)
+    }
+})
+}
+
+function searchForItemDelete(event, task, myTask, index) {
+  var finished = 0;
+  task.item.forEach(function(item) {
+    if (item.checked === true) {
+      finished++
+    } 
+    if (task.item.length === finished) {
+      updateDelete(event, active = true, myTask, index)
+    } else {updateDelete(event, active = false, myTask, index)}
+  })
+}
+
+function updateDelete(event, active, myTask, index) {
+  if (active === true) {
+    deleteTrue(event, myTask, index)
+  } else {
+    deleteFalse(event, myTask, index)
+  }
+}
+
+function deleteTrue(event, myTask, index){
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = false;
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__delete__text'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
+  var x = true;
+  myTask.updateXButton(storageArray, x, index)
+}
+
+function deleteFalse(event, myTask, index){
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = true;
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__text'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
+  var x = false;
+  myTask.updateXButton(storageArray, x, index)
+}
+
 function cardDelete(event) {
+  event.target.parentNode.parentNode.parentNode.remove()
   storageArray.forEach(function(task, index){
-    if (event.target.parentNode.id === task.id) {
+    var myTask = reinstantiate(index)
+    if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
       console.log('delete')
+      myTask.deleteFromStorage(storageArray, index)
     }
   });
 };
