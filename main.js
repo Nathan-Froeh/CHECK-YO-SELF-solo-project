@@ -31,6 +31,7 @@ makeTaskButton.addEventListener('click', initializeTask)
 window.addEventListener('load', retrieveTask)
 toDoListBox.addEventListener('click', taskSelector)
 
+
 /************  UNIVERSAL FUNCTIONS  ***********/
 
 function reinstantiate(i) {
