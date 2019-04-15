@@ -196,6 +196,15 @@ input{
   border: 2px solid #c7d3d8;
 }
 
+.task__card__urgent {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 10px;
+  border: 2px solid #ffc30c;
+  background: #ffe89d
+}
+
 .crd__title {
   color: #1f1f3d;
   margin-left: 10px;
@@ -208,6 +217,14 @@ input{
   margin: auto;
   border-top: 2px solid #c7d3d8;
   border-bottom: 2px solid #c7d3d8;
+}
+
+.crd--ul__urgent {
+  padding: 10px;
+  width: 99%;
+  margin: auto;
+  border-top: 2px solid #ffc30c;
+  border-bottom: 2px solid #ffc30c;
 }
 
 .crd__li {
@@ -237,6 +254,16 @@ input{
 .crd__text{
   font-size: 10px;
   color: #3c6577;
+}
+
+.crd__text__urgent {
+  font-size: 10px;
+  color: #b23a25;
+}
+
+.crd__delete__text {
+  font-size: 10px;
+  color: #C0583A;
 }
 
 .crd__li__checked {

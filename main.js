@@ -1,3 +1,9 @@
+// INSTRUCTOR QUESTIONS
+// 1 DOES STORAGEARRAY AND TASKOBJECTS COUNT AS 2 ARRAYS
+// 2 DOES MY GENCARD FUNCTION COUNT AS OVER 10 LINES
+// 3
+
+
 /************  GLOBAL VARIABLES  ***********/
 var storageArray = JSON.parse(localStorage.getItem('task')) || [];
 var taskObjects = [];
@@ -29,7 +35,7 @@ toDoListBox.addEventListener('click', taskSelector)
 
 function reinstantiate(i) {
   return new Task(storageArray[i].id, storageArray[i].title,
-    storageArray[i].item, storageArray[i].urgent, storageArray[i].task);
+    storageArray[i].item, storageArray[i].urgent, storageArray[i].xButton);
 };
 
 function retrieveTask() {
@@ -115,26 +121,34 @@ function initializeTask() {
 function checkUrgent(task) {
   var urgent;
   task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg'
-  genToDoList(task, urgent)
+  task.urgent ? urgentCSS = '__urgent' : urgentCSS = ''
+  checkXButton(task, urgent, urgentCSS)
   checkCheckMark(task)
 };
 
-function genToDoList(task, urgent) {
+function checkXButton(task, urgent, urgentCSS){
+  task.xButton ? x = 'images/delete-active.svg' : x = 'images/delete.svg'
+  task.xButton ? xText = 'crd__delete__text' : xText = 'crd__text'
+  task.xButton ? xDisable = '' : xDisable = 'disabled'
+  genToDoList(task, urgent, x, xText, urgentCSS, xDisable)
+}
+
+function genToDoList(task, urgent, x, xText, urgentCSS, xDisable) {
   var toDoCard = `
-  <article class='task__card' data-id='crd--ul${task.id}' id='${task.id}'>
+  <article class='task__card${urgentCSS}' data-id='crd--ul${task.id}' id='${task.id}'>
     <section class='crd--stn top--crd--stn'>
       <h3 class='crd__title'>${task.title}</h3>
     </section>
-      <ul class='crd--ul' id='crd--ul${task.id}' data-id='${task.id}'>
+      <ul class='crd--ul${urgentCSS}' id='crd--ul${task.id}' data-id='${task.id}'>
       </ul>
       <section class='crd--stn bottom--crd--stn'>
         <div class='crd--urgent--div'>
           <input type='image' src=${urgent} id='crd__btn__urgent' class='crd__btn crd__urgent'>
-          <p class='crd__text crd__urgent__text'>URGENT</p>
+          <p class='crd__text${urgentCSS}'>URGENT</p>
         </div>
         <div class='crd--delete--div'>
-          <input type='image' src='images/delete.svg' id='crd__btn__delete' class='crd__btn crd__delete' disabled>
-          <p class='crd__text crd__delete__text'>DELETE</p>
+          <input type='image' src=${x} id='crd__btn__delete' class='crd__btn crd__delete' ${xDisable}>
+          <p class=${xText}>DELETE</p>
         </div>
       </section>
     </article>`
@@ -236,19 +250,38 @@ function taskCheck(event, task, myTask, checked) {
   })
 }
 
-
 /***************  MAKE LIST URGENT  ******************/
 
 function toggleUrgent(event){
+  console.log(event.target.parentNode.parentNode.parentNode.childNodes[3])
   if (event.target.src.match('images/urgent.svg')) {
-    event.target.src = 'images/urgent-active.svg'
-    var urgent = true;
+    urgentTrue(event)
   } else {
-    event.target.src = 'images/urgent.svg'
-    urgent = false;
-  }
-  cardUrgent(event, urgent)
+    urgentFalse(event)
+  };
 };
+
+// Main Section   event.target.parentNode.parentNode.parentNode
+// UL section   event.target.parentNode.parentNode.parentNode.childNodes[3]
+// Urgent text  event.target.parentNode.childNodes[3]
+
+function urgentTrue(event){
+  event.target.src = 'images/urgent-active.svg'
+  event.target.parentNode.parentNode.parentNode.classList = 'task__card__urgent';
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul__urgent'
+  event.target.parentNode.childNodes[3].classList = 'crd__text__urgent'
+  var urgent = true;
+  cardUrgent(event, urgent)
+}
+
+function urgentFalse(event){
+  event.target.src = 'images/urgent.svg'
+  event.target.parentNode.parentNode.parentNode.classList = 'task__card';
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul'
+  event.target.parentNode.childNodes[3].classList = 'crd__text'
+  var urgent = false;
+  cardUrgent(event, urgent)
+}
 
 function cardUrgent(event, urgent) {
   storageArray.forEach(function(task, index){
@@ -260,44 +293,59 @@ function cardUrgent(event, urgent) {
 };
 
 /***************  REMOVE TODO LIST  ******************/
-// task = each card
-// item = each list item
-// index = index of list item
 
 function searchForDeleteCard(event){
   storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
-      searchForItemDelete(event, task)
+      searchForItemDelete(event, task, myTask, index)
     }
 })
 }
 
-function searchForItemDelete(event, task) {
+function searchForItemDelete(event, task, myTask, index) {
   var finished = 0;
-  task.item.forEach(function(item, index) {
+  task.item.forEach(function(item) {
     if (item.checked === true) {
       finished++
     } 
     if (task.item.length === finished) {
-      updateDelete(event, active = true)
-    } else {updateDelete(event, active = false)}
+      updateDelete(event, active = true, myTask, index)
+    } else {updateDelete(event, active = false, myTask, index)}
   })
 }
 
-function updateDelete(event, active) {
+function updateDelete(event, active, myTask, index) {
   if (active === true) {
-    event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
+    deleteTrue(event, myTask, index)
   } else {
-    event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
+    deleteFalse(event, myTask, index)
   }
 }
 
+function deleteTrue(event, myTask, index){
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = false;
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__delete__text'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
+  var x = true;
+  myTask.updateXButton(storageArray, x, index)
+}
+
+function deleteFalse(event, myTask, index){
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = true;
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__text'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
+  var x = false;
+  myTask.updateXButton(storageArray, x, index)
+}
+
 function cardDelete(event) {
-  console.log('delete')
+  event.target.parentNode.parentNode.parentNode.remove()
   storageArray.forEach(function(task, index){
+    var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
       console.log('delete')
+      myTask.deleteFromStorage(storageArray, index)
     }
   });
 };
