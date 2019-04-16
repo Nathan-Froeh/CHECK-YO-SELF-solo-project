@@ -27,11 +27,13 @@
           <ul class='ul nav--ul' id='nav--list--items'>
           </ul>
           <section class='nav--stn bottom--nav--stn'>
-            <div class='item--input'>
+            <wrapper class='item--input'>
               <label class='nav__text item' for='input__item'>Task Item</label>
-              <input type='text' id='input__item' class='input__text__item'>
-              <input type='image' src='images/plus.svg' id='btn__add__li' class='btn__add__li' disabled>
-            </div>
+              <container class='item__input__bar'>
+                <input type='text' id='input__item' class='input__text__item'>
+                <input type='image' src='images/plus.svg' id='btn__add__li' class='btn__add__li' disabled>
+              </container>
+            </wrapper>
             <input type='submit' id='btn__make__list' class='btn' value='Make Task List' disabled>
             <input type='submit' id='btn__clear' class='btn' value='Clear All' disabled>
           </section>
