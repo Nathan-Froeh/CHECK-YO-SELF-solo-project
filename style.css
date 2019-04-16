@@ -6,7 +6,6 @@
   font-family: 'Open sans', sans-serif;
 }
 body{
-  height: 100vh;
   font-weight: 400;
 }
 
@@ -99,9 +98,11 @@ label{
 
 nav{
   background-color: #597A8B;
-  width: 277px;
+  width: 275px;
   display: flex;
   flex-direction: column;
+  min-width: 275px;
+  min-height: 100vh;
 }
 
 input{
@@ -181,26 +182,30 @@ input{
 
 /********** CARD SECTION  ***********/
 
+.main__card__area {
+  width: 100%;
+  overflow: auto;
+}
+
 .card__area {
-  width: 67%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  width: 100%;
+  column-width: 15em;
+  padding: 15px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .task__card {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin: 10px;
+  break-inside: avoid;
+  width: 100%;
+  margin-bottom: 15px;
   border: 2px solid #c7d3d8;
 }
 
 .task__card__urgent {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin: 10px;
+  break-inside: avoid;
+  width: 100%;
+  margin-bottom: 15px;
   border: 2px solid #ffc30c;
   background: #ffe89d
 }

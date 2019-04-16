@@ -1,0 +1,19 @@
+@media screen and (max-width:650px){
+nav {
+  min-width: 200px;
+}
+
+.input__text__item,
+.search__field {
+  width: 140px;
+}
+}
+
+
+@media screen and (max-width:500px){
+  main {
+    flex-wrap: wrap;
+  }
+
+  
+}
