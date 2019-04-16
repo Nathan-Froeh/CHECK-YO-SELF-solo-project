@@ -1,8 +1,3 @@
-// INSTRUCTOR QUESTIONS
-// 1 DOES STORAGEARRAY AND TASKOBJECTS COUNT AS 2 ARRAYS
-// 2 DOES MY GENCARD FUNCTION COUNT AS OVER 10 LINES
-// 3
-
 
 /************  GLOBAL VARIABLES  ***********/
 var storageArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -16,9 +11,10 @@ var makeTaskButton = document.querySelector('#btn__make__list');
 var clearButton = document.querySelector('#btn__clear');
 var urgentFilter = document.querySelector('#btn__urgency__filter');
 var toDoListItems = document.querySelector('#nav--list--items');
-var toDoListBox = document.querySelector('.card__area');
+var toDoListBox = document.querySelector('#card__area');
 var navList = document.querySelector('#nav--list--items')
-
+var message = document.querySelector('#message')
+var messageUrgent = document.querySelector('#urgent__message')
 
 /************  EVENT LISTENERS  ***********/
 
@@ -30,7 +26,8 @@ navList.addEventListener('click', checkDeleteButton)
 makeTaskButton.addEventListener('click', initializeTask)
 window.addEventListener('load', retrieveTask)
 toDoListBox.addEventListener('click', taskSelector)
-
+searchInput.addEventListener('keyup', filterSearch)
+urgentFilter.addEventListener('click', checkForUrgent)
 
 /************  UNIVERSAL FUNCTIONS  ***********/
 
@@ -43,6 +40,7 @@ function retrieveTask() {
   storageArray.forEach(function(task) {
     checkUrgent(task)
   });
+  makeToDoMessage()
 };
 
 function taskSelector(event) {
@@ -53,6 +51,16 @@ function taskSelector(event) {
     toggleUrgent(event);
   } else if (event.target.className === 'crd__btn crd__delete') {
     cardDelete(event);
+  };
+};
+
+function makeToDoMessage(){
+  if (storageArray.length > 0) {
+    message.className = 'message__inactive';
+    toDoListBox.className = 'card__area';
+  } else {
+    message.className = 'message__active';
+    toDoListBox.className = 'no__card__area';
   };
 };
 
@@ -114,6 +122,7 @@ function initializeTask() {
   var task = new Task(Date.now(), titleInput.value, taskObjects);
   storageArray.push(task);
   task.saveToStorage(storageArray);
+  makeToDoMessage();
   checkUrgent(task);
   clearFields();
   checkActiveButtons();
@@ -262,10 +271,6 @@ function toggleUrgent(event){
   };
 };
 
-// Main Section   event.target.parentNode.parentNode.parentNode
-// UL section   event.target.parentNode.parentNode.parentNode.childNodes[3]
-// Urgent text  event.target.parentNode.childNodes[3]
-
 function urgentTrue(event){
   event.target.src = 'images/urgent-active.svg'
   event.target.parentNode.parentNode.parentNode.classList = 'task__card__urgent';
@@ -295,58 +300,118 @@ function cardUrgent(event, urgent) {
 
 /***************  REMOVE TODO LIST  ******************/
 
-function searchForDeleteCard(event){
+function searchForDeleteCard(event) {
   storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index)
     if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
       searchForItemDelete(event, task, myTask, index)
-    }
-})
-}
+    };
+});
+};
 
 function searchForItemDelete(event, task, myTask, index) {
   var finished = 0;
   task.item.forEach(function(item) {
     if (item.checked === true) {
       finished++
-    } 
+    };
     if (task.item.length === finished) {
-      updateDelete(event, active = true, myTask, index)
-    } else {updateDelete(event, active = false, myTask, index)}
-  })
-}
+      updateDelete(event, active = true, myTask, index);
+    } else {updateDelete(event, active = false, myTask, index)};
+  });
+};
 
 function updateDelete(event, active, myTask, index) {
   if (active === true) {
-    deleteTrue(event, myTask, index)
+    deleteTrue(event, myTask, index);
   } else {
-    deleteFalse(event, myTask, index)
-  }
-}
+    deleteFalse(event, myTask, index);
+  };
+};
 
-function deleteTrue(event, myTask, index){
+function deleteTrue(event, myTask, index) {
   event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = false;
-  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__delete__text'
-  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__delete__text';
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg';
   var x = true;
-  myTask.updateXButton(storageArray, x, index)
-}
+  myTask.updateXButton(storageArray, x, index);
+};
 
-function deleteFalse(event, myTask, index){
+function deleteFalse(event, myTask, index) {
   event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].disabled = true;
-  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__text'
-  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg'
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[3].classList = 'crd__text';
+  event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete.svg';
   var x = false;
-  myTask.updateXButton(storageArray, x, index)
-}
+  myTask.updateXButton(storageArray, x, index);
+};
 
 function cardDelete(event) {
-  event.target.parentNode.parentNode.parentNode.remove()
-  storageArray.forEach(function(task, index){
-    var myTask = reinstantiate(index)
+  event.target.parentNode.parentNode.parentNode.remove();
+  storageArray.forEach(function(task, index) {
+    var myTask = reinstantiate(index);
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
       console.log('delete')
       myTask.deleteFromStorage(storageArray, index)
-    }
+    };
+  });
+  makeToDoMessage();
+};
+
+/************  SEARCHAREA  *************/
+
+function filterSearch() {
+  var search = searchInput.value.toUpperCase();
+  var searchArray = [];
+  storageArray.forEach(function(item) {
+    var title = item.title.toUpperCase()
+    if (title.indexOf(search) > -1) {
+      searchArray.unshift(item);
+      genFiltered(searchArray);
+    };
   });
 };
+
+function genFiltered(searchArray) {
+  console.log(searchArray)
+  toDoListBox.innerHTML = '';
+  searchArray.forEach(function(item){
+    checkUrgent(item)
+  });
+};
+
+/***************  FILTER BY URGENT  ***************/
+
+function filterUrgent() {
+  var urgentArray = [];
+  storageArray.forEach(function(item) {
+    if (item.urgent === true) {
+      urgentArray.push(item)
+      urgentIsTrue(urgentArray)
+    } else {
+      urgentIsFalse()
+    }
+  })
+}
+
+function checkForUrgent() {
+  if (urgentFilter.className === 'btn btn__urgency__filter') {
+    urgentFilter.className = 'btn btn__urgency__filter__active';
+    filterUrgent();
+  } else {
+    urgentFilter.className = 'btn btn__urgency__filter';
+    toDoListBox.innerHTML = '';
+    retrieveTask();
+  }
+}
+
+function urgentIsFalse(){
+  toDoListBox.innerHTML = `
+  <p class='message__active' id='urgent__message'>You have nothing urgent today</p>`;
+  toDoListBox.className = 'no__card__area';
+}
+
+function urgentIsTrue(urgentArray){
+  toDoListBox.className = 'card__area';
+  genFiltered(urgentArray)
+}
+

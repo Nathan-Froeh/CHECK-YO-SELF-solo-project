@@ -94,6 +94,14 @@ label{
   margin-bottom: 5px;
 }
 
+.message__active {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.message__inactive {
+  display: none;
+}
 /*************  NAV  ***************/
 
 nav{
@@ -185,6 +193,12 @@ input{
   margin: 10px;
 }
 
+.btn__urgency__filter__active {
+  margin: 10px;
+  background: #ef4a23;
+  border: 2px solid #782611;
+}
+
 /********** CARD SECTION  ***********/
 
 .main__card__area {
@@ -200,6 +214,12 @@ input{
   overflow-y: scroll;
 }
 
+.no__card__area{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .task__card {
   break-inside: avoid;
   width: 100%;
