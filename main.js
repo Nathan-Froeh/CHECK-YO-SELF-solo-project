@@ -54,7 +54,7 @@ function taskSelector(event) {
   };
 };
 
-function makeToDoMessage(){
+function makeToDoMessage() {
   if (storageArray.length > 0) {
     message.className = 'message__inactive';
     toDoListBox.className = 'card__area';
@@ -130,18 +130,18 @@ function initializeTask() {
 
 function checkUrgent(task) {
   var urgent;
-  task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg'
-  task.urgent ? urgentCSS = '__urgent' : urgentCSS = ''
-  checkXButton(task, urgent, urgentCSS)
-  checkCheckMark(task)
+  task.urgent ? urgent = 'images/urgent-Active.svg' : urgent = 'images/urgent.svg';
+  task.urgent ? urgentCSS = '__urgent' : urgentCSS = '';
+  checkXButton(task, urgent, urgentCSS);
+  checkCheckMark(task);
 };
 
-function checkXButton(task, urgent, urgentCSS){
-  task.xButton ? x = 'images/delete-active.svg' : x = 'images/delete.svg'
-  task.xButton ? xText = 'crd__delete__text' : xText = 'crd__text'
-  task.xButton ? xDisable = '' : xDisable = 'disabled'
-  genToDoList(task, urgent, x, xText, urgentCSS, xDisable)
-}
+function checkXButton(task, urgent, urgentCSS) {
+  task.xButton ? x = 'images/delete-active.svg' : x = 'images/delete.svg';
+  task.xButton ? xText = 'crd__delete__text' : xText = 'crd__text';
+  task.xButton ? xDisable = '' : xDisable = 'disabled';
+  genToDoList(task, urgent, x, xText, urgentCSS, xDisable);
+};
 
 function genToDoList(task, urgent, x, xText, urgentCSS, xDisable) {
   var toDoCard = `
@@ -162,7 +162,7 @@ function genToDoList(task, urgent, x, xText, urgentCSS, xDisable) {
         </div>
       </section>
     </article>`
-    toDoListBox.insertAdjacentHTML('afterbegin', toDoCard)
+    toDoListBox.insertAdjacentHTML('afterbegin', toDoCard);
 };
 
 function checkCheckMark(task) {
@@ -178,12 +178,12 @@ function checkCheckMark(task) {
 };
 
 function genToDoListItems(task, item, src, myClass) {
-  var cardListItems = document.querySelector(`#crd--ul${task.id}`)
+  var cardListItems = document.querySelector(`#crd--ul${task.id}`);
     var taskListItem = `
     <li class='crd__li' data-id='${item.id}' id='${item.id}'>
       <input type='image' src=${src} class='crd__li__check'>
       <p class='${myClass} crd__li__uncheck'>${item.text}</p>
-    </li>`
+    </li>`;
     cardListItems.insertAdjacentHTML('beforeend', taskListItem);
 };
 
@@ -207,13 +207,13 @@ function clearListItems() {
 function clearArray() {
   taskObjects = [];
   checkActiveButtons();
-}
+};
 
 /***************  DELETE LIST ITEM  ******************/
 
 function checkDeleteButton(event) {
-  if (event.target.className === 'nav__li__delete'){
-    removeListItem(event)
+  if (event.target.className === 'nav__li__delete') {
+    removeListItem(event);
   };
 };
 
@@ -223,22 +223,20 @@ function removeListItem(event) {
 
 /***************  CHECK ITEM COMPLETE  ******************/
 
-function toggleCheckText(event){
+function toggleCheckText(event) {
   if (event.target.src.match('images/checkbox-active.svg')) {
-    console.log('checked')
-    event.target.parentNode.childNodes[3].classList.add('crd__li__checked')
+    event.target.parentNode.childNodes[3].classList.add('crd__li__checked');
    } else {
-    event.target.parentNode.childNodes[3].classList.remove('crd__li__checked')
-    console.log('unchecked')
+    event.target.parentNode.childNodes[3].classList.remove('crd__li__checked');
    };
-}
+};
 
 function toggleCheckMark(event) {
   if (event.target.src.match('images/checkbox.svg')) {
-   event.target.src = 'images/checkbox-active.svg'
+   event.target.src = 'images/checkbox-active.svg';
    var checked = true;
   } else {
-    event.target.src = 'images/checkbox.svg'
+    event.target.src = 'images/checkbox.svg';
     checked = false;
   };
   cardCheck(event, checked);
@@ -246,54 +244,53 @@ function toggleCheckMark(event) {
 
 function cardCheck(event, checked) {
   storageArray.forEach(function(task, index) {
-    var myTask = reinstantiate(index)
-    taskCheck(event, task, myTask, checked)
+    var myTask = reinstantiate(index);
+    taskCheck(event, task, myTask, checked);
   });
 };
 
 function taskCheck(event, task, myTask, checked) {
-  task.item.forEach(function(item, index) {
+  task.item.forEach(function(item) {
     if (item.id === event.target.parentNode.dataset.id) {
-      myTask.updateTask(storageArray, item, checked)
-      searchForDeleteCard(event)
-    }
-  })
-}
+      myTask.updateTask(storageArray, item, checked);
+      searchForDeleteCard(event);
+    };
+  });
+};
 
 /***************  MAKE LIST URGENT  ******************/
 
-function toggleUrgent(event){
-  console.log(event.target.parentNode.parentNode.parentNode.childNodes[3])
+function toggleUrgent(event) {
   if (event.target.src.match('images/urgent.svg')) {
-    urgentTrue(event)
+    urgentTrue(event);
   } else {
-    urgentFalse(event)
+    urgentFalse(event);
   };
 };
 
-function urgentTrue(event){
-  event.target.src = 'images/urgent-active.svg'
+function urgentTrue(event) {
+  event.target.src = 'images/urgent-active.svg';
   event.target.parentNode.parentNode.parentNode.classList = 'task__card__urgent';
-  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul__urgent'
-  event.target.parentNode.childNodes[3].classList = 'crd__text__urgent'
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul__urgent';
+  event.target.parentNode.childNodes[3].classList = 'crd__text__urgent';
   var urgent = true;
-  cardUrgent(event, urgent)
-}
+  cardUrgent(event, urgent);
+};
 
-function urgentFalse(event){
-  event.target.src = 'images/urgent.svg'
+function urgentFalse(event) {
+  event.target.src = 'images/urgent.svg';
   event.target.parentNode.parentNode.parentNode.classList = 'task__card';
-  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul'
-  event.target.parentNode.childNodes[3].classList = 'crd__text'
+  event.target.parentNode.parentNode.parentNode.childNodes[3].classList = 'crd--ul';
+  event.target.parentNode.childNodes[3].classList = 'crd__text';
   var urgent = false;
-  cardUrgent(event, urgent)
-}
+  cardUrgent(event, urgent);
+};
 
 function cardUrgent(event, urgent) {
-  storageArray.forEach(function(task, index){
-    var myTask = reinstantiate(index)
+  storageArray.forEach(function(task, index) {
+    var myTask = reinstantiate(index);
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
-      myTask.updateToDo(storageArray, urgent, index)
+      myTask.updateToDo(storageArray, urgent, index);
     };
   });
 };
@@ -302,9 +299,9 @@ function cardUrgent(event, urgent) {
 
 function searchForDeleteCard(event) {
   storageArray.forEach(function(task, index) {
-    var myTask = reinstantiate(index)
+    var myTask = reinstantiate(index);
     if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
-      searchForItemDelete(event, task, myTask, index)
+      searchForItemDelete(event, task, myTask, index);
     };
 });
 };
@@ -313,7 +310,7 @@ function searchForItemDelete(event, task, myTask, index) {
   var finished = 0;
   task.item.forEach(function(item) {
     if (item.checked === true) {
-      finished++
+      finished++;
     };
     if (task.item.length === finished) {
       updateDelete(event, active = true, myTask, index);
@@ -350,8 +347,7 @@ function cardDelete(event) {
   storageArray.forEach(function(task, index) {
     var myTask = reinstantiate(index);
     if (parseInt(event.target.parentNode.parentNode.parentNode.id) === task.id) {
-      console.log('delete')
-      myTask.deleteFromStorage(storageArray, index)
+      myTask.deleteFromStorage(storageArray, index);
     };
   });
   makeToDoMessage();
@@ -372,10 +368,9 @@ function filterSearch() {
 };
 
 function genFiltered(searchArray) {
-  console.log(searchArray)
   toDoListBox.innerHTML = '';
-  searchArray.forEach(function(item){
-    checkUrgent(item)
+  searchArray.forEach(function(item) {
+    checkUrgent(item);
   });
 };
 
@@ -385,19 +380,19 @@ function filterUrgent() {
   var urgentArray = [];
   storageArray.forEach(function(item) {
     if (item.urgent === true) {
-      urgentArray.push(item)
-    } 
-  })
-  urgentCounter(urgentArray)
-}
+      urgentArray.push(item);
+    } ;
+  });
+  urgentCounter(urgentArray);
+};
 
-function urgentCounter(urgentArray){
+function urgentCounter(urgentArray) {
   if (urgentArray.length > 0){
-    urgentIsTrue(urgentArray)
+    urgentIsTrue(urgentArray);
   } else {
-    urgentIsFalse()
-  }
-}
+    urgentIsFalse();
+  };
+};
 
 function checkForUrgent() {
   if (urgentFilter.className === 'btn btn__urgency__filter') {
@@ -407,18 +402,16 @@ function checkForUrgent() {
     urgentFilter.className = 'btn btn__urgency__filter';
     toDoListBox.innerHTML = '';
     retrieveTask();
-  }
-}
+  };
+};
 
-function urgentIsFalse(){
+function urgentIsFalse() {
   toDoListBox.innerHTML = `
   <p class='message__active' id='urgent__message'>You have nothing urgent today</p>`;
   toDoListBox.className = 'no__card__area';
 }
 
-function urgentIsTrue(urgentArray){
+function urgentIsTrue(urgentArray) {
   toDoListBox.className = 'card__area';
-  genFiltered(urgentArray)
-}
-
-// css outline: none
+  genFiltered(urgentArray);
+};

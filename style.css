@@ -115,6 +115,7 @@ nav{
 
 input{
   height: 40px;
+  outline: none;
 }
 
 .top--nav--stn{
@@ -145,12 +146,14 @@ input{
   margin: 3px;
   width: 15px;
   height: 15px;
+  outline: none;
 }
 
 .crd__btn {
   margin-top: 5px;
   height: 20px;
   width: 20px;
+  outline: none;
 }
 
 .bottom--nav--stn{
