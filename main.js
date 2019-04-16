@@ -12,9 +12,9 @@ var clearButton = document.querySelector('#btn__clear');
 var urgentFilter = document.querySelector('#btn__urgency__filter');
 var toDoListItems = document.querySelector('#nav--list--items');
 var toDoListBox = document.querySelector('#card__area');
-var navList = document.querySelector('#nav--list--items')
-var message = document.querySelector('#message')
-var messageUrgent = document.querySelector('#urgent__message')
+var navList = document.querySelector('#nav--list--items');
+var message = document.querySelector('#message');
+var messageUrgent = document.querySelector('#urgent__message');
 
 /************  EVENT LISTENERS  ***********/
 
@@ -22,12 +22,12 @@ titleInput.addEventListener('keyup', allowAddItem);
 taskInput.addEventListener('keyup', allowAddItem);
 addItem.addEventListener('click', addAnItem);
 clearButton.addEventListener('click', clearFields);
-navList.addEventListener('click', checkDeleteButton)
-makeTaskButton.addEventListener('click', initializeTask)
-window.addEventListener('load', retrieveTask)
-toDoListBox.addEventListener('click', taskSelector)
-searchInput.addEventListener('keyup', filterSearch)
-urgentFilter.addEventListener('click', checkForUrgent)
+navList.addEventListener('click', checkDeleteButton);
+makeTaskButton.addEventListener('click', initializeTask);
+window.addEventListener('load', retrieveTask);
+toDoListBox.addEventListener('click', taskSelector);
+searchInput.addEventListener('keyup', filterSearch);
+urgentFilter.addEventListener('click', checkForUrgent);
 
 /************  UNIVERSAL FUNCTIONS  ***********/
 
@@ -38,9 +38,9 @@ function reinstantiate(i) {
 
 function retrieveTask() {
   storageArray.forEach(function(task) {
-    checkUrgent(task)
+    checkUrgent(task);
   });
-  makeToDoMessage()
+  makeToDoMessage();
 };
 
 function taskSelector(event) {
@@ -149,20 +149,20 @@ function genToDoList(task, urgent, x, xText, urgentCSS, xDisable) {
     <section class='crd--stn top--crd--stn'>
       <h3 class='crd__title'>${task.title}</h3>
     </section>
-      <ul class='crd--ul${urgentCSS}' id='crd--ul${task.id}' data-id='${task.id}'>
-      </ul>
-      <section class='crd--stn bottom--crd--stn'>
-        <div class='crd--urgent--div'>
-          <input type='image' src=${urgent} id='crd__btn__urgent' class='crd__btn crd__urgent'>
-          <p class='crd__text${urgentCSS}'>URGENT</p>
-        </div>
-        <div class='crd--delete--div'>
-          <input type='image' src=${x} id='crd__btn__delete' class='crd__btn crd__delete' ${xDisable}>
-          <p class=${xText}>DELETE</p>
-        </div>
-      </section>
-    </article>`
-    toDoListBox.insertAdjacentHTML('afterbegin', toDoCard);
+    <ul class='crd--ul${urgentCSS}' id='crd--ul${task.id}' data-id='${task.id}'>
+    </ul>
+    <section class='crd--stn bottom--crd--stn'>
+      <div class='crd--urgent--div'>
+        <input type='image' src=${urgent} id='crd__btn__urgent' class='crd__btn crd__urgent'>
+        <p class='crd__text${urgentCSS}'>URGENT</p>
+      </div>
+      <div class='crd--delete--div'>
+        <input type='image' src=${x} id='crd__btn__delete' class='crd__btn crd__delete' ${xDisable}>
+        <p class=${xText}>DELETE</p>
+      </div>
+    </section>
+  </article>`;
+  toDoListBox.insertAdjacentHTML('afterbegin', toDoCard);
 };
 
 function checkCheckMark(task) {
@@ -179,12 +179,12 @@ function checkCheckMark(task) {
 
 function genToDoListItems(task, item, src, myClass) {
   var cardListItems = document.querySelector(`#crd--ul${task.id}`);
-    var taskListItem = `
-    <li class='crd__li' data-id='${item.id}' id='${item.id}'>
-      <input type='image' src=${src} class='crd__li__check'>
-      <p class='${myClass} crd__li__uncheck'>${item.text}</p>
-    </li>`;
-    cardListItems.insertAdjacentHTML('beforeend', taskListItem);
+  var taskListItem = `
+  <li class='crd__li' data-id='${item.id}' id='${item.id}'>
+    <input type='image' src=${src} class='crd__li__check'>
+    <p class='${myClass} crd__li__uncheck'>${item.text}</p>
+  </li>`;
+  cardListItems.insertAdjacentHTML('beforeend', taskListItem);
 };
 
 /***************  CLEAR INPUTS  ******************/
@@ -198,7 +198,7 @@ function clearFields() {
 };
 
 function clearListItems() {
-  taskObjects.forEach(function(item, index) {
+  taskObjects.forEach(function(item) {
     var element = document.getElementById(item.id);
     element.parentNode.removeChild(element);
  });
@@ -303,7 +303,7 @@ function searchForDeleteCard(event) {
     if (parseInt(event.target.parentNode.parentNode.dataset.id) === task.id) {
       searchForItemDelete(event, task, myTask, index);
     };
-});
+ });
 };
 
 function searchForItemDelete(event, task, myTask, index) {
