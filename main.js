@@ -386,11 +386,17 @@ function filterUrgent() {
   storageArray.forEach(function(item) {
     if (item.urgent === true) {
       urgentArray.push(item)
-      urgentIsTrue(urgentArray)
-    } else {
-      urgentIsFalse()
-    }
+    } 
   })
+  urgentCounter(urgentArray)
+}
+
+function urgentCounter(urgentArray){
+  if (urgentArray.length > 0){
+    urgentIsTrue(urgentArray)
+  } else {
+    urgentIsFalse()
+  }
 }
 
 function checkForUrgent() {
@@ -415,3 +421,4 @@ function urgentIsTrue(urgentArray){
   genFiltered(urgentArray)
 }
 
+// css outline: none
