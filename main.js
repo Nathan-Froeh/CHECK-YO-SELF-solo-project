@@ -332,6 +332,7 @@ function deleteTrue(event, myTask, index) {
   event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[3].childNodes[1].src = 'images/delete-active.svg';
   var x = true;
   myTask.updateXButton(storageArray, x, index);
+  makeToDoMessage();
 };
 
 function deleteFalse(event, myTask, index) {
@@ -407,6 +408,7 @@ function checkForUrgent() {
 
 function urgentIsFalse() {
   toDoListBox.innerHTML = `
+  <p class='message__inactive' id='message'>Don't forget to Check Yo' Self!</p>
   <p class='message__active' id='urgent__message'>You have nothing urgent today</p>`;
   toDoListBox.className = 'no__card__area';
 }

@@ -5,9 +5,7 @@
   padding: 0px;
   font-family: 'Open sans', sans-serif;
 }
-body{
-  font-weight: 400;
-}
+
 
 ul {
   list-style-type: none;
@@ -19,14 +17,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 65px;
   background-color: #1f1f3d;
   padding: 10px;
 }
 
 .logo {
   height: 35px;
-  width: 300px;
   color: #E5E5E8;
   margin-bottom: 10px;
   font-weight: 800;
@@ -41,7 +37,6 @@ header {
 }
 
 .search--bar {
-  height: 40px;
   display: flex;
 }
 
@@ -89,7 +84,6 @@ main{
 }
 
 label{
-  width: 100%;
   font-size: 14px;
   margin-bottom: 5px;
 }
@@ -119,14 +113,13 @@ input{
 }
 
 .top--nav--stn{
-  height: 60px;
+  height: 65px;
 }
 
 .nav--stn{
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0 10px 0 10px;
   margin-top: 20px;
 }
 
@@ -168,7 +161,6 @@ input{
 .item--input{
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
   margin-bottom: 20px;
 }
 
@@ -213,8 +205,6 @@ input{
   width: 100%;
   column-width: 15em;
   padding: 15px;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 
 .no__card__area{
@@ -224,8 +214,6 @@ input{
   align-items: center;
 }
 .task__card {
-  break-inside: avoid;
-  width: 100%;
   margin-bottom: 15px;
   border: 2px solid #c7d3d8;
 }
