@@ -1,4 +1,4 @@
-@media screen and (max-width:650px){
+@media screen and (max-width:650px) {
 nav {
   min-width: 200px;
 }
@@ -11,7 +11,7 @@ nav {
 }
 
 
-@media screen and (max-width:500px){
+@media screen and (max-width:500px) {
   main {
     flex-wrap: wrap;
   }
@@ -50,7 +50,7 @@ nav {
     font-size: 20px;
   }
 
-  .search__field:placeholder-shown{
+  .search__field:placeholder-shown {
     font-size: 20px;
     padding-left: 10px;
   }
@@ -82,6 +82,5 @@ nav {
 .btn__urgency__filter {
   margin: 10px 10px 20px 10px;
 }
-
 
 }

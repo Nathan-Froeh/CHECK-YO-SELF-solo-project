@@ -9,8 +9,6 @@ ul {
   list-style-type: none;
 }
 
-/**********  HEADER  ************/
-
 header {
   align-items: center;
   background-color: #1f1f3d;
@@ -74,8 +72,6 @@ header {
   border-radius: 2px 0 0 2px;
 }
 
-/************** MAIN  ***************/
-
 main {
   display: flex;
   height: 91%;
@@ -94,8 +90,6 @@ label {
 .message__inactive {
   display: none;
 }
-
-/*************  NAV  ***************/
 
 nav {
   background-color: #597A8B;
@@ -192,8 +186,6 @@ input {
   border: 2px solid #782611;
   margin: 10px;
 }
-
-/********** CARD SECTION  ***********/
 
 .main__card__area {
   overflow: auto;
