@@ -1,13 +1,8 @@
 * {
   box-sizing: border-box;
-  /* border: 1px black solid; */
   margin: 0px;
   padding: 0px;
   font-family: 'Open sans', sans-serif;
-}
-body{
-  height: 100vh;
-  font-weight: 400;
 }
 
 ul {
@@ -20,29 +15,27 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 65px;
   background-color: #1f1f3d;
   padding: 10px;
 }
 
 .logo {
   height: 35px;
-  width: 300px;
   color: #E5E5E8;
   margin-bottom: 10px;
   font-weight: 800;
 }
 
 .yellow__text{
-  color: #fec40e
+  color: #fec40e;
+  margin: 0 10px;
 }
 
-.search__field:placeholder-shown{
+.search__field:placeholder-shown {
   padding-left: 10px;
 }
 
 .search--bar {
-  height: 40px;
   display: flex;
 }
 
@@ -81,46 +74,55 @@ header {
   border-radius: 2px 0 0 2px;
 }
 
-
 /************** MAIN  ***************/
 
-main{
+main {
   display: flex;
   height: 91%;
 }
 
-label{
-  width: 100%;
+label {
   font-size: 14px;
   margin-bottom: 5px;
 }
 
+.message__active {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.message__inactive {
+  display: none;
+}
+
 /*************  NAV  ***************/
 
-nav{
+nav {
   background-color: #597A8B;
-  width: 277px;
+  width: 275px;
   display: flex;
   flex-direction: column;
+  min-width: 275px;
+  min-height: 100vh;
 }
 
-input{
+input {
   height: 40px;
+  outline: none;
 }
 
-.top--nav--stn{
-  height: 60px;
+.top--nav--stn {
+  height: 65px;
 }
 
-.nav--stn{
+.nav--stn {
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0 10px 0 10px;
   margin-top: 20px;
 }
 
-.ul{
+.ul {
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -136,15 +138,17 @@ input{
   margin: 3px;
   width: 15px;
   height: 15px;
+  outline: none;
 }
 
 .crd__btn {
   margin-top: 5px;
   height: 20px;
   width: 20px;
+  outline: none;
 }
 
-.bottom--nav--stn{
+.bottom--nav--stn {
   border-bottom: 2px solid #3d6678;
   margin-bottom: 10px;
 }
@@ -153,11 +157,15 @@ input{
   color: #B1C1C9
 }
 
-.item--input{
+.item--input {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
   margin-bottom: 20px;
+}
+
+.item__input__bar {
+  width: 100%;
+  display: inline-flex;
 }
 
 .input__text__item,
@@ -165,7 +173,7 @@ input{
   width: 215px;
 }
 
-.btn{
+.btn {
   color:#ffffff;
   background-color: #1f1f3d;
   height: 40px;
@@ -179,28 +187,42 @@ input{
   margin: 10px;
 }
 
+.btn__urgency__filter__active {
+  margin: 10px;
+  background: #ef4a23;
+  border: 2px solid #782611;
+}
+
 /********** CARD SECTION  ***********/
 
+.main__card__area {
+  width: 100%;
+  overflow: auto;
+}
+
 .card__area {
-  width: 67%;
+  width: 100%;
+  column-width: 15em;
+  padding: 15px;
+}
+
+.no__card__area {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .task__card {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin: 10px;
+  margin-bottom: 15px;
   border: 2px solid #c7d3d8;
+  break-inside: avoid;
 }
 
 .task__card__urgent {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin: 10px;
+  break-inside: avoid;
+  width: 100%;
+  margin-bottom: 15px;
   border: 2px solid #ffc30c;
   background: #ffe89d
 }
@@ -236,13 +258,13 @@ input{
   color: #1f1f3d;
 }
 
-.bottom--crd--stn{
+.bottom--crd--stn {
   display: flex;
   justify-content: space-between;
 }
 
 .crd--urgent--div,
-.crd--delete--div{
+.crd--delete--div {
   width: 50px;
   display: flex;
   flex-wrap: wrap;
@@ -251,7 +273,7 @@ input{
   margin-bottom: 3px;
 }
 
-.crd__text{
+.crd__text {
   font-size: 10px;
   color: #3c6577;
 }
