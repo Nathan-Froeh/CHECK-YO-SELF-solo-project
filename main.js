@@ -376,6 +376,16 @@ function genFiltered(searchArray) {
 };
 
 /***************  FILTER BY URGENT  ***************/
+function checkForUrgent() {
+  if (urgentFilter.className === 'btn btn__urgency__filter') {
+    urgentFilter.className = 'btn btn__urgency__filter__active';
+    filterUrgent();
+  } else {
+    urgentFilter.className = 'btn btn__urgency__filter';
+    toDoListBox.innerHTML = '';
+    retrieveTask();
+  };
+};
 
 function filterUrgent() {
   var urgentArray = [];
@@ -392,17 +402,6 @@ function urgentCounter(urgentArray) {
     urgentIsTrue(urgentArray);
   } else {
     urgentIsFalse();
-  };
-};
-
-function checkForUrgent() {
-  if (urgentFilter.className === 'btn btn__urgency__filter') {
-    urgentFilter.className = 'btn btn__urgency__filter__active';
-    filterUrgent();
-  } else {
-    urgentFilter.className = 'btn btn__urgency__filter';
-    toDoListBox.innerHTML = '';
-    retrieveTask();
   };
 };
 
