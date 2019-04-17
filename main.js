@@ -1,5 +1,6 @@
 
-/************  GLOBAL VARIABLES  ***********/
+/************  NO CODE ABOVE THIS LINE  ***********/
+
 var storageArray = JSON.parse(localStorage.getItem('task')) || [];
 var taskObjects = [];
 var searchButton = document.querySelector('#btn__search');
@@ -16,8 +17,6 @@ var navList = document.querySelector('#nav--list--items');
 var message = document.querySelector('#message');
 var messageUrgent = document.querySelector('#urgent__message');
 
-/************  EVENT LISTENERS  ***********/
-
 titleInput.addEventListener('keyup', allowAddItem);
 taskInput.addEventListener('keyup', allowAddItem);
 addItem.addEventListener('click', addAnItem);
@@ -28,8 +27,6 @@ window.addEventListener('load', retrieveTask);
 toDoListBox.addEventListener('click', taskSelector);
 searchInput.addEventListener('keyup', filterSearch);
 urgentFilter.addEventListener('click', checkForUrgent);
-
-/************  UNIVERSAL FUNCTIONS  ***********/
 
 function reinstantiate(i) {
   return new Task(storageArray[i].id, storageArray[i].title,
@@ -63,9 +60,6 @@ function makeToDoMessage() {
     toDoListBox.className = 'no__card__area';
   };
 };
-
-
-/***************  ADD TASK ITEMS  ******************/
 
 function allowAddItem() {
   if (titleInput.value && taskInput.value !== '') {
@@ -114,8 +108,6 @@ function checkActiveButtons() {
     clearButton.disabled = true;
   };
 };
-
-/***************  MAKE TODO LIST  ******************/
 
 function initializeTask() {
   event.preventDefault();
@@ -187,8 +179,6 @@ function genToDoListItems(task, item, src, myClass) {
   cardListItems.insertAdjacentHTML('beforeend', taskListItem);
 };
 
-/***************  CLEAR INPUTS  ******************/
-
 function clearFields() {
   event.preventDefault();
   titleInput.value = '';
@@ -209,8 +199,6 @@ function clearArray() {
   checkActiveButtons();
 };
 
-/***************  DELETE LIST ITEM  ******************/
-
 function checkDeleteButton(event) {
   if (event.target.className === 'nav__li__delete') {
     removeListItem(event);
@@ -220,8 +208,6 @@ function checkDeleteButton(event) {
 function removeListItem(event) {
   event.target.parentNode.remove();
 };
-
-/***************  CHECK ITEM COMPLETE  ******************/
 
 function toggleCheckText(event) {
   if (event.target.src.match('images/checkbox-active.svg')) {
@@ -258,8 +244,6 @@ function taskCheck(event, task, myTask, checked) {
   });
 };
 
-/***************  MAKE LIST URGENT  ******************/
-
 function toggleUrgent(event) {
   if (event.target.src.match('images/urgent.svg')) {
     urgentTrue(event);
@@ -294,8 +278,6 @@ function cardUrgent(event, urgent) {
     };
   });
 };
-
-/***************  REMOVE TODO LIST  ******************/
 
 function searchForDeleteCard(event) {
   storageArray.forEach(function(task, index) {
@@ -354,8 +336,6 @@ function cardDelete(event) {
   makeToDoMessage();
 };
 
-/************  SEARCHAREA  *************/
-
 function filterSearch() {
   var search = searchInput.value.toUpperCase();
   var searchArray = [];
@@ -375,7 +355,6 @@ function genFiltered(searchArray) {
   });
 };
 
-/***************  FILTER BY URGENT  ***************/
 function checkForUrgent() {
   if (urgentFilter.className === 'btn btn__urgency__filter') {
     urgentFilter.className = 'btn btn__urgency__filter__active';
