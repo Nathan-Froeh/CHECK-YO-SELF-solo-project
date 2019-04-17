@@ -15,12 +15,12 @@ http://frontend.turing.io/projects/check-yo-self.html
 https://nathan-froeh.github.io/CHECK-YO-SELF-solo-project/
 
 ### Comp images
-![Desktop view static comp]()
-![Desktop view static comp]()
-![Desktop view static comp]()
+![Desktop view static comp](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.46.38%20AM.png)
+![Desktop view static comp](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.46.49%20AM.png)
+![Desktop view static comp](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.47.16%20AM.png)
 
 ### My project images
-![Desktop view static project]()
-![Desktop view static project]()
-![Desktop view static project]()
+![Desktop view static project](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.49.20%20AM.png)
+![Desktop view static project](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.50.09%20AM.png)
+![Desktop view static project](https://github.com/Nathan-Froeh/CHECK-YO-SELF-solo-project/blob/master/images/Screen%20Shot%202019-04-17%20at%207.50.42%20AM.png)
 
